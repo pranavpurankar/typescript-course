@@ -64,7 +64,7 @@ function calculateDiscount1(price:number):number{
 }
 
 // Why we have to be very carefull for type any
-// spread like wildfire. 
+// spread like wildfire
 
 function addThree(number:any){
     let anotherNumber:number=3;
@@ -74,4 +74,46 @@ function addThree(number:any){
 const result = addThree(3);
 const someValue = result;
 someValue.myMethod();
-console.log(result);
+
+// The myMethod() is not defined still typescript not yelling, 
+// but at the run-time it is throwing an error so imagine it when working
+// on large codebase
+
+// console.log(result);
+
+
+// ====== Optional and default parameters === 
+// in the function from the typeScript
+
+
+function calculatePrice(price:number, discount?:number):number{
+    return price - (discount || 0);
+}
+
+let priceAfterDiscount = calculatePrice(100, 20);
+
+// Default parameter
+function calculateScore(
+    initialScore:number,
+    penaltyPoint:number=20)
+    :number{
+    return initialScore - penaltyPoint;
+}
+
+let scoreAfterPenalty = calculateScore(100,20);
+let scoreBeforePenalty = calculateScore(100);
+
+// Rest parameter [ in js ...]
+
+function sum(message:string, ...numbers:number[]):string{
+    const doubled = numbers.map((num) => num*2);
+    console.log(doubled);
+
+    let total = numbers.reduce( (previous, current)=>{
+        return previous+current;
+    },0)
+    return `${message}${total}`
+}
+
+let resultSum = sum('The total is: ',1,2,3,4);
+console.log(resultSum);
